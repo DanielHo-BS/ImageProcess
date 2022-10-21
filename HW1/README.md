@@ -19,7 +19,7 @@ matplotlib
 Install in terminal:
 
 ```bash
-pip install -r requierment.txt
+pip install <package-name>
 ```
 
 # Run
