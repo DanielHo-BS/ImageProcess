@@ -36,14 +36,15 @@ for row in range(rows):
             tmp[row, colum] = np.sum(np.multiply(img[row-k:row+k+1,colum-k:colum+k+1],filter))
 
 # Unsharp Masking 0.8*(a-b)+a
-result = 0.8*(img-tmp)+img 
+result = 0.8*(img-tmp)+img
+result = result*255/np.max(result) 
 
 # Create folder
 if not os.path.exists('images'):    
     os.makedirs('images')
 
 # Show all images
-imgs = [img*255, tmp*255, result*255]
+imgs = [img*255, tmp*255, result]
 titles = ['Input', 'Mean-filter', 'Unsharp']
 fig = plt.figure()
 fig.set_figwidth(15)
@@ -54,6 +55,8 @@ for i in range(3):
     plt.subplot(1,3,i+1)
     plt.imshow(imgs[i], 'gray')
     plt.title(titles[i])
+    plt.axis('off')
+    plt.colorbar()
 print("Save the image of result to /images/ \n")
 plt.savefig('images/All-Result-Unsharp.jpg')
 plt.show()

@@ -38,7 +38,7 @@ if not os.path.exists('images'):
     os.makedirs('images')
 
 # Show all images
-imgs = [img*maxval, tmpx*maxval, tmpy*maxval, result]
+imgs = [img*maxval, tmpx, tmpy, result]
 titles = ['Input', 'Sobel-X', 'Sobel-Y', 'Result']
 fig = plt.figure()
 fig.set_figwidth(15)
@@ -49,6 +49,8 @@ for i in range(4):
     plt.subplot(1,4,i+1)
     plt.imshow(imgs[i], 'gray')
     plt.title(titles[i])
+    plt.axis('off')
+    plt.colorbar()
 print("Save the image of result to /images/ \n")
 plt.savefig('images/All-Result-Sobel.jpg')
 plt.show()
