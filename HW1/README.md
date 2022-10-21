@@ -6,11 +6,17 @@ Use the python to coding.
 
 ## Packages
 
+Python packages:
+
 ```text
 opencv-python
 numpy 
 matplotlib 
 ```
+
+## Install
+
+Install in terminal:
 
 ```bash
 pip install -r requierment.txt
