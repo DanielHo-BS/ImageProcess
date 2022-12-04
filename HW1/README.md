@@ -2,9 +2,13 @@
 
 Use the python to coding.
 
-# Installation
+[HW1.1-Sobel](HW1-Sobel.ipynb)
 
-## Packages
+[HW1.2-Unsharp](HW1-Unsharp.ipynb)
+
+## Installation
+
+### Packages
 
 Python packages:
 
@@ -14,7 +18,7 @@ numpy
 matplotlib 
 ```
 
-## Install
+### Install
 
 Install in terminal:
 
@@ -22,7 +26,7 @@ Install in terminal:
 pip install <package-name>
 ```
 
-# Run
+## Run
 
 ```bash
 # Sobel
@@ -32,6 +36,6 @@ python ./Sobel.py
 python ./Unsharp.py
 ```
 
-# Reference
+## Reference
 
 1. [OpenCV](https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html)
