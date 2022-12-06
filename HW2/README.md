@@ -54,6 +54,12 @@ Two images:
 
 Using ``Matlab`` to analysis features of leaves.
 
+* [Main.m](HW2_3.m)
+* [leaveFeature.m](leaveFeature.m)
+* [featureDistribution.m](featureDistribution.m)
+
+### Steps
+
 1. load 90 images
 2. foreground mask
 3. analysis
