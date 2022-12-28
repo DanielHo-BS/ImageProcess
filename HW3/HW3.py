@@ -1,70 +1,72 @@
-import os
 import numpy as np
-import cv2 as cv
-from matplotlib import pyplot as plt
-import random
+from cv2 import resize, imread, IMREAD_GRAYSCALE
 from datetime import datetime
+from matplotlib import pyplot as plt
+from random import seed, sample
 
-# Convolvtion 
-def convolve2D(image, kernel):
+def convolve2D(img, kernel):
     kernel_size = kernel.shape[0]
-    h ,w = image.shape
-    new_image = np.zeros((h,w))
-    # Padding
-    image = np.pad(image, (kernel_size-1)//2)
-    # Sum
+    h ,w = img.shape
+    img_new = np.zeros((h,w))
+    img = np.pad(img, (kernel_size-1)//2)  # Padding img with kernel size
     for i in range(h):
         for j in range(w):
-            new_image[i,j] = (image[i:i+kernel_size,j:j+kernel_size] * kernel).sum()
-    return new_image
+            img_new[i,j] = (img[i:i+kernel_size,
+                j:j+kernel_size] * kernel).sum()   # Sum the array
 
-# Max pooling (2*2)
+    return img_new
+
 def max_pool(img):
-    ds_img = np.zeros((img.shape[0]//2,img.shape[1]//2))
+    img_new = np.zeros((img.shape[0]//2,img.shape[1]//2))
     strides = 2
-    # Max
-    for i in range(ds_img.shape[0]):
-        for j in range(ds_img.shape[1]):
-            ds_img[i,j]=img[strides*i+0:strides*i+2,strides*j+0:strides*j+2].max()           
-    return ds_img
+    for i in range(img_new.shape[0]):
+        for j in range(img_new.shape[1]):
+            img_new[i,j]=img[strides*i+0:strides*i+2,
+                strides*j+0:strides*j+2].max()  # Find the maximum of array
 
-# Feature extraction
-def featureExtraction(input, filter1, filter2): 
+    return img_new
+
+def feature_extraction(input, filter1, filter2): 
+    """
+    Using simplify CNN to extracte feature,
+    with 2 layers (CNN + MaxPool) and 1 flatten layer.
+    Input size: 8*8*200
+    Output size: 200*9
+    Filter size: 3*3
+    MaxPool size: 2*2
+    """
     output = np.zeros((9,200))
-    # Simplify CNN
     for i in range(200):
-        # Leyer 1: Convolve2D
-        conv1 = convolve2D(input[:,:,i],filter1)
+        # Leyer 1: Convolve2D 
+        conv1 = convolve2D(input[:,:,i],filter1)  # output size: 8*8
         conv2 = convolve2D(input[:,:,i],filter2)
         # Leyer 1: Max pooling
-        conv1 = max_pool(conv1)
+        conv1 = max_pool(conv1)  # output size: 4*4
         conv2= max_pool(conv2)
-        featuremap = np.stack((conv1,conv2),axis=0)
+        featuremap = np.stack((conv1,conv2),axis=0) # output size: 4*4*2
         # Leyer 2: Convolve2D
-        conv1 = convolve2D(featuremap[0],filter1)
+        conv1 = convolve2D(featuremap[0],filter1) # output size: 4*4
         conv1 = convolve2D(conv1,filter2)
         conv2 = convolve2D(featuremap[1],filter1)
         conv2 = convolve2D(conv2,filter2)
         # Leyer 2: Max pooling
-        conv1 = max_pool(conv1)
+        conv1 = max_pool(conv1)  # output size: 2*2
         conv2= max_pool(conv2)
-        featuremap = np.stack((conv1,conv2),axis=0)
+        featuremap = np.stack((conv1,conv2),axis=0) # output size: 2*2*2
         # Flatten
-        output[0:8,i] = featuremap.flatten()
+        output[0:8,i] = featuremap.flatten()  # from 2*2*2 to 8*1
         # Add bias
         output[8,i] = 1
-    return output.T
 
-# Linear regression
-def linearRegression(X,Y):
+    return output.T  # make output size = 200*9
+
+def linear_regression(X,Y):
     return (np.linalg.inv(X.T @ X)) @ X.T @ Y
 
-# Prediction
 def prediction(X,Y,A):
     Yp = np.zeros((200,1))
-    Yp[X.dot(A) >= 0.5] = 1
-    # Confuse matrix
-    confuse_matrix = np.zeros((2,2))
+    Yp[X.dot(A) >= 0.5] = 1  # Make prediction value > 0.5 = 1, others = 0
+    confuse_matrix = np.zeros((2,2))  # Create confuse matrix
     confuse_matrix[0,0] = np.sum([Yp[0:100] == Y[0:100]])
     confuse_matrix[1,0] = np.sum([Yp[0:100] != Y[0:100]])
     confuse_matrix[1,1] = np.sum([Yp[100:200] == Y[100:200]])
@@ -72,57 +74,65 @@ def prediction(X,Y,A):
     print("confuse_matrix: \n", confuse_matrix,"\n")
     return Yp
 
-# Show the result with random sampling
 def result(img, Y, Yp):
-    # Make label
-    GT = np.zeros((200,1))
-    Pred = np.zeros((200,1))
-    GT[Y == 0 ] = a
-    GT[Y == 1 ] = b
-    Pred[Yp == 0 ] = a
-    Pred[Yp == 1 ] = b
-    # Setting random seed
-    random.seed(datetime.now())
-    index = random.sample(list(range(200)),15)
-    # Subplot with 3*5 windows
+    ground_true = np.zeros((200,1))
+    predict = np.zeros((200,1))
+    ground_true[Y == 0 ] = NUMBER1  # Change label 0 into NUMBER1  
+    ground_true[Y == 1 ] = NUMBER2  # Change label 1 into NUMBER2 
+    predict[Yp == 0 ] = NUMBER1  # Change label 0 into NUMBER1
+    predict[Yp == 1 ] = NUMBER2  # Change label 1 into NUMBER2
+    seed(datetime.now())  # Setting random seed
+    index = sample(list(range(200)),15)  # Random sample 15 index from [0, 200]
     plt.figure()
     for i in range(15):
-            plt.subplot(3,5,i+1)
+            plt.subplot(3,5,i+1)  # Subplot with 3*5 windows
             plt.imshow(img[:,:,index[i]],"gray")
             plt.axis('off')
-            if GT[index[i]] == Pred[index[i]]:
+            if ground_true[index[i]] == predict[index[i]]:
                     color="blue"
             else:
                     color = "red"
-            plt.title(str(int(Pred[index[i]]))+" ("+str(index[i])+")",color=color)
+
+            plt.title(str(int(predict[index[i]]))+" ("+str(index[i])+")",color=color)
+
     plt.show()
 
 if __name__ == '__main__':
+    """----Initialize----"""
+    while(1):
+        NUMBER1 = int(input("Input NUMBER1 (0~9): "))
+        if NUMBER1 not in range(10):
+            print("NUMBER1 not in [0,10]")
+        else:
+            break
 
-    # Load the data
-    imgs_in = np.zeros((28,28,200))
-    imgs = np.zeros((8,8,200))
-    a = int(input("a: (0~9)"))
-    b = int(input("b: (0~9)"))
+    while(1):
+        NUMBER2 = int(input("Input NUMBER2 (0~9): "))
+        if NUMBER2 not in range(10):
+            print("NUMBER2 not in [0,10]")
+        elif NUMBER1 ==  NUMBER2:
+            print("NUMBER1 and NUMBER2 can not be the same.")
+        else:
+            break
+
+    FILTER1 = np.array([[-1, -1, 1], [-1, 0, 1], [-1, 1, 1]])
+    FILTER2 = FILTER1.T
+    """----Load The Data----"""
+    image = np.zeros((28,28,200))
+    image_resize = np.zeros((8,8,200))
     for i in range(100):
-        imgs_in[:,:,i] = cv.imread("train1000/"+str(100*a+i+1)+".png",cv.IMREAD_GRAYSCALE)
-        imgs_in[:,:,i+100] = cv.imread("train1000/"+str(100*b+i+1)+".png",cv.IMREAD_GRAYSCALE)
-        imgs[:,:,i] = cv.resize(imgs_in[:,:,i], (8,8))
-        imgs[:,:,i+100] = cv.resize(imgs_in[:,:,i+100], (8,8))
-
-    # Create filter1 & filter2
-    filter1 = np.array([[-1, -1, 1], [-1, 0, 1], [-1, 1, 1]])
-    filter2 = filter1.T
-
-    # Feature Extraction
-    feature = featureExtraction(imgs,filter1, filter2)
-
-    # Linear regression
+        image[:,:,i] = imread("train1000/"+
+            str(100*NUMBER1+i+1)+".png",
+            IMREAD_GRAYSCALE)
+        image[:,:,i+100] = imread("train1000/"+
+            str(100*NUMBER2+i+1)+".png",
+            IMREAD_GRAYSCALE)
+        image_resize[:,:,i] = resize(image[:,:,i], (8,8))
+        image_resize[:,:,i+100] = resize(image[:,:,i+100], (8,8))
+    """----Linear Regression----"""
+    feature = feature_extraction(image_resize,FILTER1, FILTER2)
     target = np.concatenate((np.zeros((100,1)),np.ones((100,1))))
-    coef = linearRegression(feature,target)
-
-    # Prediction
-    pred = prediction(feature, target,coef)
-
-    # Result
-    result(imgs_in, target, pred)
+    weight = linear_regression(feature,target)
+    target_predict = prediction(feature, target,weight)
+    """---Show the result-----"""
+    result(image, target, target_predict)

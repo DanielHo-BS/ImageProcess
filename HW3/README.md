@@ -13,6 +13,8 @@ Python Library:
 
 ```cmd
 python HW3.py
+# Input NUMBER1 (0~9): 
+# Input NUMBER2 (0~9):
 ```
 
 ## [HW3 - Image Recognition with Simplify CNN](HW3.ipynb)
