@@ -11,6 +11,10 @@ Python Library:
 * random
 * datetime
 
+```cmd
+python HW3.py
+```
+
 ## [HW3 - Image Recognition with Simplify CNN](HW3.ipynb)
 
 [Dataset](https://mailntustedutw-my.sharepoint.com/:u:/g/personal/m11107309_ms_ntust_edu_tw/EfS2C1MOel5LpJ5J_ZUmngIBVGiOgaJuz0m4zxXDFwkSGw?e=IC6BPw): 1000 images(0~9)
@@ -80,15 +84,15 @@ $A=(X^TX)^{-1}X^TY$
 
 ## Result
 
-for **a = 1** and **b = 4**
+for **a = 0** and **b = 1**
 
 ### Confuse matrix
 
 $\begin{vmatrix}
-98  & 12  \\
- 2  & 87  \\
+89  & 5  \\
+11  & 95  \\
 \end{vmatrix}$
 
 ### Prediction
 
-![image](images/result_1_4.png)
+![image](images/result.png)
