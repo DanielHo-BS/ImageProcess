@@ -37,28 +37,25 @@ def feature_extraction(input, filter1, filter2):
     """
     output = np.zeros((9,200))
     for i in range(200):
-        # Leyer 1: Convolve2D 
-        conv1 = convolve2D(input[:,:,i],filter1)  # output size: 8*8
+        # Leyer 1: Convolve2D + MaxPool
+        conv1 = convolve2D(input[:,:,i],filter1)  # output: 8*8
         conv2 = convolve2D(input[:,:,i],filter2)
-        # Leyer 1: Max pooling
-        conv1 = max_pool(conv1)  # output size: 4*4
+        conv1 = max_pool(conv1)  #  output: 4*4
         conv2= max_pool(conv2)
-        featuremap = np.stack((conv1,conv2),axis=0) # output size: 4*4*2
-        # Leyer 2: Convolve2D
-        conv1 = convolve2D(featuremap[0],filter1) # output size: 4*4
+        featuremap = np.stack((conv1,conv2),axis=0)  # output: 4*4*2
+        # Leyer 2: Convolve2D + MaxPool
+        conv1 = convolve2D(featuremap[0],filter1)  # output: 4*4
         conv1 = convolve2D(conv1,filter2)
         conv2 = convolve2D(featuremap[1],filter1)
         conv2 = convolve2D(conv2,filter2)
-        # Leyer 2: Max pooling
-        conv1 = max_pool(conv1)  # output size: 2*2
+        conv1 = max_pool(conv1)  # output: 2*2
         conv2= max_pool(conv2)
-        featuremap = np.stack((conv1,conv2),axis=0) # output size: 2*2*2
-        # Flatten
+        featuremap = np.stack((conv1,conv2),axis=0)  # output: 2*2*2
+        # Flatten layer
         output[0:8,i] = featuremap.flatten()  # from 2*2*2 to 8*1
-        # Add bias
-        output[8,i] = 1
+        output[8,i] = 1  # Add bias
 
-    return output.T  # make output size = 200*9
+    return output.T  # Make output size = 200*9
 
 def linear_regression(X,Y):
     return (np.linalg.inv(X.T @ X)) @ X.T @ Y
@@ -93,7 +90,8 @@ def result(img, Y, Yp):
             else:
                     color = "red"
 
-            plt.title(str(int(predict[index[i]]))+" ("+str(index[i])+")",color=color)
+            plt.title(str(int(predict[index[i]])) +
+                " (" + str(index[i]) + ")",color=color)
 
     plt.show()
 
