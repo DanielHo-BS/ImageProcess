@@ -29,7 +29,9 @@ Recognition with **linear regression**
 
 ### Load the data
 
-Intput two number a & b (0~9)
+Input two NUMBER1 & NUMBER2 (0~9).
+
+Read image_NUMBER1 and image_NUMBER2
 
 ![image](images/data.png)
 
@@ -86,7 +88,7 @@ $A=(X^TX)^{-1}X^TY$
 
 ## Result
 
-for **a = 0** and **b = 1**
+Random Sample: 15 images
 
 ### Confuse matrix
 

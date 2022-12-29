@@ -28,7 +28,7 @@ def max_pool(img):
 
 def feature_extraction(input, filter1, filter2): 
     """
-    Using simplify CNN to extracte feature,
+    Using simplify CNN to extract feature,
     with 2 layers (CNN + MaxPool) and 1 flatten layer.
     Input size: 8*8*200
     Output size: 200*9
@@ -37,13 +37,13 @@ def feature_extraction(input, filter1, filter2):
     """
     output = np.zeros((9,200))
     for i in range(200):
-        # Leyer 1: Convolve2D + MaxPool
+        # Layer 1: Convolve2D + MaxPool
         conv1 = convolve2D(input[:,:,i],filter1)  # output: 8*8
         conv2 = convolve2D(input[:,:,i],filter2)
         conv1 = max_pool(conv1)  #  output: 4*4
         conv2= max_pool(conv2)
         featuremap = np.stack((conv1,conv2),axis=0)  # output: 4*4*2
-        # Leyer 2: Convolve2D + MaxPool
+        # Layer 2: Convolve2D + MaxPool
         conv1 = convolve2D(featuremap[0],filter1)  # output: 4*4
         conv1 = convolve2D(conv1,filter2)
         conv2 = convolve2D(featuremap[1],filter1)
@@ -63,12 +63,12 @@ def linear_regression(X,Y):
 def prediction(X,Y,A):
     Yp = np.zeros((200,1))
     Yp[X.dot(A) >= 0.5] = 1  # Make prediction value > 0.5 = 1, others = 0
-    confuse_matrix = np.zeros((2,2))  # Create confuse matrix
+    confuse_matrix = np.zeros((2,2))  # Create confusion matrix
     confuse_matrix[0,0] = np.sum([Yp[0:100] == Y[0:100]])
     confuse_matrix[1,0] = np.sum([Yp[0:100] != Y[0:100]])
     confuse_matrix[1,1] = np.sum([Yp[100:200] == Y[100:200]])
     confuse_matrix[0,1] = np.sum([Yp[100:200] != Y[100:200]])
-    print("confuse_matrix: \n", confuse_matrix,"\n")
+    print("confusion matrix: \n", confuse_matrix,"\n")
     return Yp
 
 def result(img, Y, Yp):
