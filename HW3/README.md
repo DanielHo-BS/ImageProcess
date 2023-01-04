@@ -12,16 +12,21 @@ Python Library:
 * datetime
 
 ```cmd
-python HW3.py
+python HW3_linear_regression.py
 # Input NUMBER1 (0~9): 
 # Input NUMBER2 (0~9):
+
+python HW3_gradient_descent.py
+# Input NUMBER1 (0~9): 
+# Input NUMBER2 (0~9):
+
 ```
 
 ## [HW3 - Image Recognition with Simplify CNN](HW3.ipynb)
 
 [Dataset](https://mailntustedutw-my.sharepoint.com/:u:/g/personal/m11107309_ms_ntust_edu_tw/EfS2C1MOel5LpJ5J_ZUmngIBVGiOgaJuz0m4zxXDFwkSGw?e=IC6BPw): 1000 images(0~9)
 
-Recognition with **linear regression**
+Recognition with **linear regression** or **gradient descent**.
 
 ## Method
 
@@ -74,7 +79,7 @@ for i in range(200):
     output[8,i] = 1
 ```
 
-### Linear regression
+### **Linear Regression**
 
 $X(200\times9)$ : Feature
 
@@ -85,6 +90,16 @@ $A(9\times1)$ : Optimal Coefficient
 Let $Y=XA$
 
 $A=(X^TX)^{-1}X^TY$
+
+### **Gradient Desent**
+
+$G=-\frac{1}{m}\sum^m_{i=1}{(Y_i-X_i \ast W)X_i}$
+
+$dW = {-lr \ast G}$
+
+$W = W + dW$
+
+![image](images/MSE.png)
 
 ## Result
 
