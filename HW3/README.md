@@ -93,7 +93,10 @@ $A=(X^TX)^{-1}X^TY$
 
 ### **Gradient Desent**
 
-$G=-\frac{1}{m}\sum^m_{i=1}{(Y_i-X_i \ast W)X_i}$
+Mean Square Error
+$(MSE) = \frac{1}{m}\sum_{i=1}^m(Y_i-X_i \ast W)^2$
+
+$G=-\frac{1}{m}\sum_{i=1}^m(Y_i-X_i \ast W)X_i$
 
 $dW = {-lr \ast G}$
 
