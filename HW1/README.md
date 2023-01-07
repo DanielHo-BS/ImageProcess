@@ -2,9 +2,11 @@
 
 Use the python to coding.
 
-[HW1.1-Sobel](HW1-Sobel.ipynb)
+[HW1.1 - Sobel](HW1-Sobel.ipynb)
 
-[HW1.2-Unsharp](HW1-Unsharp.ipynb)
+[HW1.2 - Unsharp](HW1-Unsharp.ipynb)
+
+[HW1.3 - Salt&Pepper](HW1-SaltAndPepper.ipynb)
 
 ## Installation
 
