@@ -11,7 +11,9 @@ Python Library:
 * random
 * datetime
 
-```cmd
+## Run
+
+```bash
 python HW3_linear_regression.py
 # Input NUMBER1 (0~9): 
 # Input NUMBER2 (0~9):
@@ -19,7 +21,6 @@ python HW3_linear_regression.py
 python HW3_gradient_descent.py
 # Input NUMBER1 (0~9): 
 # Input NUMBER2 (0~9):
-
 ```
 
 ## [HW3 - Image Recognition with Simplify CNN](HW3.ipynb)

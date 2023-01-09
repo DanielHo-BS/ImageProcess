@@ -2,7 +2,19 @@
 
 Using ``python`` and ``Matlab`` to coding.
 
-## [HW2.1 - Extended Depth of Field.](HW2.1.ipynb)
+## Run
+
+```bash
+# HW2.1
+python HW2.1.py
+
+# HW2.2
+python HW2.2.py
+
+# HW2.3 with Matlab Main.m
+```
+
+## [HW2.1 - Extended Depth of Field.](HW2.1.ipynb)`
 
 Two images:
 
