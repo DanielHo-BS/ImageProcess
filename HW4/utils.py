@@ -43,12 +43,14 @@ def voting(img, magnitude):
 def scoring(hist):
     # 計算分數
     score_list = []
+    threshold = np.mean(hist) - np.std(hist)
     for hist_angle in range(0, 360):
         score = 0
-        for ang in range(0, 360):
-            ang1 = hist_angle-ang if hist_angle-ang >= 0 else hist_angle-ang+360
-            ang2 =  hist_angle+ang if hist_angle+ang <= 359 else hist_angle+ang-360
-            score = score + hist[ang1] * hist[ang2]
+        if hist[hist_angle] > threshold:
+            for ang in range(0, 360):
+                ang1 = hist_angle-ang if hist_angle-ang >= 0 else hist_angle-ang+360
+                ang2 =  hist_angle+ang if hist_angle+ang <= 359 else hist_angle+ang-360
+                score = score + hist[ang1] * hist[ang2]
         score_list.append(score)
 
 
