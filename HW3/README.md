@@ -45,13 +45,18 @@ Read image_NUMBER1 and image_NUMBER2
 
 Create two filters
 
-$filter1=\begin{vmatrix}
--1  & -1 & 1   \\
--1  & 0  & 1   \\
--1  & 1  & 1   \\
-\end{vmatrix}$
-
-$filter2 = (filter1)^T$
+```math
+\begin{align}
+filter1=
+\left[\begin{array}
+-1&-1&1  \\
+-1&0&1   \\
+-1&1&1   \\
+\end{array}\right] \\
+\\
+filter2 = (filter1)^T
+\end{align}
+```
 
 ### Feature extraction
 
@@ -95,13 +100,18 @@ $A=(X^TX)^{-1}X^TY$
 ### **Gradient Desent**
 
 Mean Square Error
-$(MSE) = \frac{1}{m}\sum_{i=1}^m(Y_i-X_i \ast W)^2$
 
-$G=-\frac{1}{m}\sum_{i=1}^m(Y_i-X_i \ast W)X_i$
-
-$dW = {-lr \ast G}$
-
-$W = W + dW$
+```math
+\begin{align}
+(MSE) = \frac{1}{m}\sum_{i=1}^m(Y_i-X_i \ast W)^2 \\
+\\
+G=-\frac{1}{m}\sum_{i=1}^m(Y_i-X_i \ast W)X_i \\
+\\
+dW = {-lr \ast G} \\
+\\
+W = W + dW
+\end{align}
+```
 
 ![image](images/MSE.png)
 
@@ -111,10 +121,12 @@ Random Sample: 15 images
 
 ### Confuse matrix
 
-$\begin{vmatrix}
-89  & 5  \\
+```math
+\left[\begin{array}{cc}
+89  & 5   \\
 11  & 95  \\
-\end{vmatrix}$
+\end{array}\right]
+```
 
 ### Prediction
 

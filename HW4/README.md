@@ -25,25 +25,21 @@ python main.py
 
 Using Sobel mask:
 
-$G_x = \left[
-    \begin{array}{ccc} 
-    1&0&-1 \\
-    2&0&-2 \\
-    1&0&-1 
-\end{array}\right ]$
-
-$G_y = \left[
-    \begin{array}{ccc} 
-    1&2&1 \\
-    0&0&0 \\
-    -11&-2&-1 
-\end{array}\right ]$
-
-$\theta = \arctan{\frac{G_y}{G_x}}$
+```math
+\begin{align}
+G_x = \left[\begin{array}{ccc}1&0&-1 \\ 2&0&-2 \\ 1&0&-1\end{array}\right ] \\
+\\
+G_y = \left[\begin{array}{ccc}1&2&1 \\ 0&0&0 \\ -11&-2&-1\end{array}\right ] \\
+\\
+\theta = \arctan{\frac{G_y}{G_x}}
+\end{align}
+```
 
 ### Score
 
-$S(x)= \sum_{\theta=0}^{359}{H(x+\theta)H(x-\theta)}$
+```math
+S(x)= \sum_{\theta=0}^{359}{H(x+\theta)H(x-\theta)}
+```
 
 ## Result
 
