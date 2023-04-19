@@ -9,6 +9,7 @@ from utils import voting, scoring, centerPoint, symmetryAxis
 def main(inputFile, outputPath):
     # 讀取圖像
     img = cv2.imread(inputFile)
+    img = cv2.resize(img, [256, 256])
     # 轉為灰度圖像
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 

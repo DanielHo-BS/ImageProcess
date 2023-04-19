@@ -20,6 +20,10 @@ Here will put some Image Processing notes.
 
 Transfer-learning: feature extraction and linear regression or gradient descent
 
+## [HW4](HW4)
+
+1. Symmetry Axis Detection.
+
 ## Installatoin
 
 python>=3.7

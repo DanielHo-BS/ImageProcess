@@ -41,6 +41,7 @@ def voting(img, magnitude):
 
 
 def scoring(hist):
+    hist = (hist - np.min(hist)) / (np.max(hist) - np.min(hist))
     # 計算分數
     score_list = []
     threshold = np.mean(hist) - np.std(hist)
